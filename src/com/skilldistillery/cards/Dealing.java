@@ -17,13 +17,13 @@ public class Dealing {
 		Scanner sc = new Scanner(System.in);
 		deck.shuffle();
 		boolean keepGoing = true;
-			System.out.println("Welcome to the dealer!");
+			System.out.println("Welcome to The Dealer Tester!");
 			while (keepGoing) {
-				System.out.println("How many cards would you like: ");
+				System.out.println("How many cards would you like dealt: ");
 
 			int numCards = sc.nextInt();
 			if (numCards > 52) {
-				System.out.println("You must draw less than the size of the Deck(52)");
+				System.out.println("You cannot be dealt more than 52 cards.");
 			}
 
 			List<Card> playerHand = new ArrayList<>(numCards);
@@ -34,9 +34,9 @@ public class Dealing {
 				playerHand.add(card);
 
 			}
-			System.out.println("Your hand is: " + playerHand + " and totals: " + handTotal);
+			System.out.println("Cards dealt: " + playerHand + " and totals: " + handTotal);
 			
-			System.out.print("Would you like another hand? (y)es or (n)o: ");
+			System.out.print("Would you like another hand dealt? (y)es or (n)o: ");
 			String option = sc.next();
 			if(option.equals("y")) {
 				continue;

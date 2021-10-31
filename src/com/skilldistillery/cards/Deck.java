@@ -32,6 +32,8 @@ public class Deck {
 
 	public void shuffle() {
 		Collections.shuffle(deck);
+		System.out.println("\n  The deck is now shuffled.");
 	}
+	
 
 }
