@@ -123,7 +123,7 @@ public class BlackJackFunctions {
 		double newPlayerMoney = playerMoney + (playerBet * 1.5);
 		return newPlayerMoney;
 	}
-	
+
 	public void rules() {
 		System.out.println(
 				"\n  Welcome to BlackJack. This version uses a 4 - 52 card decks. The player(you) \n  attempts to beat "
@@ -143,7 +143,7 @@ public class BlackJackFunctions {
 						+ "to you doubled.\n");
 		System.out.println("");
 	}
-	
+
 	public void playBlackJack(Scanner sc) {
 		BlackJackFunctions bjf = new BlackJackFunctions();
 		String playerName = bjf.playerNamePromptAndGreeting(sc);
