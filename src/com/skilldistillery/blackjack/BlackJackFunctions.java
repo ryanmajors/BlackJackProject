@@ -27,7 +27,7 @@ public class BlackJackFunctions {
 		System.out.println("\n  Welcome to BlackJack! ");
 		System.out.print("\n  Enter your name to begin: ");
 		String playerName = sc.nextLine();
-		BlackJackPlayer player = new BlackJackPlayer(playerName);
+
 		return playerName;
 
 	}
@@ -49,7 +49,7 @@ public class BlackJackFunctions {
 	}
 
 	public int checkToSeeIfPlayerHasBlackJack(List<Card> playerHand, List<Card> dealerHand, int playerHandTotal,
-			int dealerHandTotal) {
+			int dealerHandTotal, int playerBet) {
 		int blackJack = 0;
 		playerHandTotal = 0;
 		for (Card card : playerHand) {
@@ -64,29 +64,62 @@ public class BlackJackFunctions {
 			if (dealerHandTotal < playerHandTotal) {
 
 				blackJack = 1;
+			} else if (dealerHandTotal == playerHandTotal) {
+				System.out.println("This hand is a push. Player gets their " + playerBet + " bet back");
 			}
 		}
 		return blackJack;
 	}
 
-	public void playerBustCheck(int playerHandTotal) {
-		if (playerHandTotal > 21) {
-			System.out.println("You busted. Hand is over!");
-		}
-	}
-
-	public void checkWinConditions(List<Card> playerHand, List<Card> dealerHand, BlackJackPlayer player,
-			BlackJackDealer dealer) {
+	public int checkWinConditions(List<Card> playerHand, List<Card> dealerHand, BlackJackPlayer player,
+			BlackJackDealer dealer, int playerBet, int playerMoney) {
 
 		int playerHandTotal = player.calculateHandTotal(playerHand);
 		int dealerHandTotal = dealer.calculateHandTotal(dealerHand);
-
+		int newPlayerMoney = playerMoney;
 		if (playerHandTotal > dealerHandTotal) {
-			System.out.println("\n  " + player + " wins!");
+			System.out.println("\n  " + player + " wins $" + playerBet + "!");
+			newPlayerMoney = playerWinsBet(playerMoney, playerBet);
 		} else if (playerHandTotal < dealerHandTotal) {
-			System.out.println("\n  Dealer wins!");
+			System.out.println("\n  Dealer wins and takes your $" + playerBet + " bet.");
+			newPlayerMoney = playerLosesBet(playerMoney, playerBet);
 		} else {
-			System.out.println("\n  This hand is a push.");
+			System.out.println("\n  This hand is a push. " + player + " gets their $" + playerBet + " bet back");
+			
 		}
+		return newPlayerMoney;
+	}
+
+	public double blackJackPayoutConversion(int playerBet) {
+
+		return playerBet * 1.5;
+	}
+
+	public int checkIfPlayerHas2Aces(int playerHandTotal, List<Card> playerHand) {
+		int has2Aces = 0;
+		playerHandTotal = 0;
+		for (Card card : playerHand) {
+			playerHandTotal += card.getValue();
+		}
+
+		if (playerHandTotal > 21) {
+			has2Aces = 1;
+		}
+		return has2Aces;
+	}
+
+	public int playerWinsBet(int playerMoney, int playerBet) {
+		int newPlayerMoney = playerMoney + playerBet;
+		return newPlayerMoney;
+	}
+
+	public int playerLosesBet(int playerMoney, int playerBet) {
+		int newPlayerMoney = playerMoney - playerBet;
+		return newPlayerMoney;
+	}
+
+	public double playerWinsBlackJackBet(int playerMoney, int playerBet) {
+		double newPlayerMoney = playerMoney + (playerBet * 1.5);
+		return newPlayerMoney;
 	}
 }

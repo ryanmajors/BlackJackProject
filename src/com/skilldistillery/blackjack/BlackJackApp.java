@@ -62,10 +62,9 @@ public class BlackJackApp {
 		BlackJackPlayer player = new BlackJackPlayer(playerName);
 		BlackJackDealer dealer = new BlackJackDealer("Dealer");
 		int playerMoney = bjf.playerbank(sc);
-		// create new deck of cards
 		Deck startingDeck = bjf.unboxDeckOfCards();
 		startingDeck.shuffle();
-		int playerBet = player.placeBet(sc);
+		int playerBet = player.placeBet(sc, playerMoney);
 		boolean gameLoop = true;
 		while (gameLoop) {
 			// shuffle deck of cards
@@ -81,48 +80,82 @@ public class BlackJackApp {
 
 			boolean playing = true;
 			while (playing) {
+				int playerHas2Aces = bjf.checkIfPlayerHas2Aces(playerHandTotal, playerHand);
+				if (playerHas2Aces == 1) {
+					System.out.println("\n  You have busted. The dealer takes your $" + playerBet + " bet.");
+					playerMoney = bjf.playerLosesBet(playerMoney, playerBet);
+					playing = false;
+					break;
+				}
+
 				int playerHasBlackJack = bjf.checkToSeeIfPlayerHasBlackJack(playerHand, dealerHand, playerHandTotal,
-						dealerHandTotal);
+						playerBet, dealerHandTotal);
 				if (playerHasBlackJack == 1) {
-					System.out.println("\n  BLACKJACK! You win!");
+					double blackJackPayout = bjf.blackJackPayoutConversion(playerBet);
+					System.out.println("\n  BLACKJACK! You win $" + blackJackPayout);
+					playerMoney = bjf.playerWinsBet(playerMoney, playerBet);
 					playing = false;
 					break;
 				}
+
 				int playerStoodOrBusted = player.playerTurn(sc, startingDeck, playerHand, dealerHand, playerHandTotal,
-						dealerHandTotal, player);
+						player, playerBet);
 				if (playerStoodOrBusted == 1) {
-					System.out.println("\n  You have busted. This hand is over!");
+					playerMoney = bjf.playerLosesBet(playerMoney, playerBet);
 					playing = false;
 					break;
 				}
 
-				int dealerStoodOrBusted = dealer.dealerTurn(sc, startingDeck, dealerHand, dealerHandTotal, player);
-
+				int dealerStoodOrBusted = dealer.dealerTurn(sc, startingDeck, dealerHand, dealerHandTotal, player,
+						playerBet);
+					
 				if (dealerStoodOrBusted == 1) {
-					bjf.checkWinConditions(playerHand, dealerHand, player, dealer);
+					playerMoney = bjf.checkWinConditions(playerHand, dealerHand, player, dealer, playerBet, playerMoney);
 
 //			System.out.println(playerHandTotal + " " + dealerHandTotal);
 
 				}
 				if (dealerStoodOrBusted == 2) {
+					playerMoney = bjf.playerWinsBet(playerMoney, playerBet);
 					playing = false;
 					break;
 				}
 				playing = false;
 			}
-			System.out.print("\n  Would you like to play again: 1[Yes] 2[No]   ");
-			int playAgain = sc.nextInt();
-			if (playAgain == 2) {
-				System.out.println("\n  Have a wonderful day. Please come back soon!");
-				gameLoop = false;
+			boolean playAgainLoop = true;
+			while (playAgainLoop) {
+				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+				System.out.println("\n  " + player + " balance: $" + playerMoney);
+				if(playerMoney == 0) {
+					System.out.print("\n  You are out of money. Would you like to [1]Deposit more money or [2]Quit: ");
+					int outOfMoney = sc.nextInt();
+					if(outOfMoney == 1) {
+						playerMoney = bjf.playerbank(sc);
+					} else if(outOfMoney == 2) {
+						System.out.println("\n  Have a wonderful day and come back real soon!");
+					} else {
+						System.out.println("\n  Invalid option. Please try again.");
+					}
+				}
+				System.out.print("\n  Would you like to play again: 1[Yes] 2[No]   ");
+				int playAgain = sc.nextInt();
+				if (playAgain == 1) {
+					playerBet = player.placeBet(sc, playerMoney);
+					playAgainLoop = false;
+
+				} else {
+					System.out.println("\n  Have a wonderful day and come back real soon!");
+					playAgainLoop = false;
+					gameLoop = false;
+			
+				}
 			}
 		}
-
 	}
 
 	private static void rules() {
 		System.out.println(
-				"\n  Welcome to BlackJack. This version uses a standard 52-card deck. The player(you) \n  attempts to beat "
+				"\n  Welcome to BlackJack. This version uses a 4 - 52 card decks. The player(you) \n  attempts to beat "
 						+ "the dealer by getting a count as close to 21 as possible,\n  without going over 21. The game begins with the "
 						+ "dealer dealing the player, 1 card \n  face up. Then the dealer deals themself 1 card face down(hidden). Then "
 						+ "this \n  repeats 1 more time, except the dealer deals their second card face up.\n\n  If the player shows a "

@@ -8,17 +8,19 @@ public class Deck {
 	private List<Card> deck;
 
 	public Deck() {
-		deck = createDeck();
+		deck = create4DeckShoe();
 	}
 
-	private List<Card> createDeck() {
+	private List<Card> create4DeckShoe() {
+
 		List<Card> newDeck = new ArrayList<>();
-		for (Suit suit : Suit.values()) {
-			for (Rank rank : Rank.values()) {
-				newDeck.add(new Card(suit, rank));
+		for (int i = 0; i < 4; i++) {
+			for (Suit suit : Suit.values()) {
+				for (Rank rank : Rank.values()) {
+					newDeck.add(new Card(suit, rank));
+				}
 			}
 		}
-
 		return newDeck;
 	}
 
@@ -34,6 +36,5 @@ public class Deck {
 		Collections.shuffle(deck);
 		System.out.println("\n  The deck is now shuffled.");
 	}
-	
 
 }

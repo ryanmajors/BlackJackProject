@@ -8,16 +8,21 @@ import com.skilldistillery.cards.Deck;
 
 public class BlackJackPlayer extends Person {
 
+	private List<Card> playerHand;
+
 	public BlackJackPlayer(String name) {
 		super(name);
 
 	}
 
-	public int playerTurn(Scanner sc, Deck startingDeck, List<Card> playerHand, List<Card> dealerHand, int playerHandTotal,
-			int dealerHandTotal, BlackJackPlayer player) {
+	public List<Card> getPlayerHand() {
+		return playerHand;
+	}
 
+	public int playerTurn(Scanner sc, Deck startingDeck, List<Card> playerHand, List<Card> dealerHand, 
+			int playerHandTotal, BlackJackPlayer player, int playerBet) {
 		playerHandTotal = calculateHandTotal(playerHand);
-		dealerHandTotal = calculateHandTotal(dealerHand);
+//		dealerHandTotal = calculateHandTotal(dealerHand);
 		int stoodOrBusted = 0;
 
 		boolean stillPlayerTurn = true;
@@ -36,9 +41,8 @@ public class BlackJackPlayer extends Person {
 				System.out.println("\n  " + player + "'s hand: " + playerHand + " Showing: " + playerHandTotal);
 				// check to see if player busts after drawing
 				if (playerHandTotal > 21) {
-
+					System.out.println("\n  You have busted. The dealer takes your $" + playerBet + " bet.");
 					stoodOrBusted = 1;
-
 					stillPlayerTurn = false;
 					break;
 
@@ -62,9 +66,13 @@ public class BlackJackPlayer extends Person {
 		return handTotal;
 	}
 
-	public int placeBet(Scanner sc) {
+	public int placeBet(Scanner sc, int playerMoney) {
 		System.out.print("\n  How much would you like to bet: $");
 		int betValue = sc.nextInt();
+		while(betValue > playerMoney) {
+			System.out.print("\n  You can't bet more than you have. Please place another bet: $");
+			betValue = sc.nextInt();
+		}
 		return betValue;
 	}
 

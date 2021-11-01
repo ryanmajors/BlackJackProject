@@ -20,7 +20,7 @@ public class BlackJackDealer extends Person {
 	}
 
 	public int dealerTurn(Scanner sc, Deck startingDeck, List<Card> dealerHand, int dealerHandTotal,
-			BlackJackPlayer player) {
+			BlackJackPlayer player, int playerBet) {
 
 		dealerHandTotal = calculateHandTotal(dealerHand);
 		System.out.println("\n  Dealer will begin their turn now.");
@@ -41,7 +41,7 @@ public class BlackJackDealer extends Person {
 				dealerTurn = false;
 				break;
 			} else {
-				System.out.println("\n  Dealer busts. " + player + " wins!");
+				System.out.println("\n  Dealer busts. " + player + " wins $" + playerBet + ".");
 				stoodOrBusted = 2;
 				break;
 			}
@@ -60,8 +60,10 @@ public class BlackJackDealer extends Person {
 
 	public void dealCards(Deck startingDeck, List<Card> playerHand, List<Card> dealerHand, BlackJackPlayer player) {
 		Scanner sc = new Scanner(System.in);
+		
 		System.out.println("\n  Press Enter to deal cards.");
 		String buffer = sc.nextLine();
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println("\n  Dealing cards...");
 
 		int playerHandTotal = 0;
@@ -83,7 +85,7 @@ public class BlackJackDealer extends Person {
 		dealerHand.add(dealerCard2);
 
 		System.out.println("\n  " + player + "'s hand: " + playerHand + " showing [" + playerHandTotal + "]");
-		System.out.println("\n  Dealer's hand: [Hidden " + dealerCard2 + "] showing [" + dealerCard2.getValue() + "]");
+		System.out.println("\n  Dealer's hand: [Hidden] " + dealerCard2 + " showing [" + dealerCard2.getValue() + "]");
 
 	}
 
