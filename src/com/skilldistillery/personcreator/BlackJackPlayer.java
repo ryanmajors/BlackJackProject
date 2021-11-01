@@ -19,7 +19,7 @@ public class BlackJackPlayer extends Person {
 		return playerHand;
 	}
 
-	public int playerTurn(Scanner sc, Deck startingDeck, List<Card> playerHand, List<Card> dealerHand, 
+	public int playerTurn(Scanner sc, Deck startingDeck, List<Card> playerHand, List<Card> dealerHand,
 			int playerHandTotal, BlackJackPlayer player, int playerBet) {
 		playerHandTotal = calculateHandTotal(playerHand);
 //		dealerHandTotal = calculateHandTotal(dealerHand);
@@ -69,7 +69,7 @@ public class BlackJackPlayer extends Person {
 	public int placeBet(Scanner sc, int playerMoney) {
 		System.out.print("\n  How much would you like to bet: $");
 		int betValue = sc.nextInt();
-		while(betValue > playerMoney) {
+		while (betValue > playerMoney) {
 			System.out.print("\n  You can't bet more than you have. Please place another bet: $");
 			betValue = sc.nextInt();
 		}

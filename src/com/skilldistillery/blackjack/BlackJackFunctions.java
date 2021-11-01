@@ -85,7 +85,7 @@ public class BlackJackFunctions {
 			newPlayerMoney = playerLosesBet(playerMoney, playerBet);
 		} else {
 			System.out.println("\n  This hand is a push. " + player + " gets their $" + playerBet + " bet back");
-			
+
 		}
 		return newPlayerMoney;
 	}

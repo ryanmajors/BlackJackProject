@@ -108,9 +108,10 @@ public class BlackJackApp {
 
 				int dealerStoodOrBusted = dealer.dealerTurn(sc, startingDeck, dealerHand, dealerHandTotal, player,
 						playerBet);
-					
+
 				if (dealerStoodOrBusted == 1) {
-					playerMoney = bjf.checkWinConditions(playerHand, dealerHand, player, dealer, playerBet, playerMoney);
+					playerMoney = bjf.checkWinConditions(playerHand, dealerHand, player, dealer, playerBet,
+							playerMoney);
 
 //			System.out.println(playerHandTotal + " " + dealerHandTotal);
 
@@ -124,14 +125,15 @@ public class BlackJackApp {
 			}
 			boolean playAgainLoop = true;
 			while (playAgainLoop) {
-				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+				System.out.println(
+						"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 				System.out.println("\n  " + player + " balance: $" + playerMoney);
-				if(playerMoney == 0) {
+				if (playerMoney == 0) {
 					System.out.print("\n  You are out of money. Would you like to [1]Deposit more money or [2]Quit: ");
 					int outOfMoney = sc.nextInt();
-					if(outOfMoney == 1) {
+					if (outOfMoney == 1) {
 						playerMoney = bjf.playerbank(sc);
-					} else if(outOfMoney == 2) {
+					} else if (outOfMoney == 2) {
 						System.out.println("\n  Have a wonderful day and come back real soon!");
 					} else {
 						System.out.println("\n  Invalid option. Please try again.");
@@ -147,7 +149,7 @@ public class BlackJackApp {
 					System.out.println("\n  Have a wonderful day and come back real soon!");
 					playAgainLoop = false;
 					gameLoop = false;
-			
+
 				}
 			}
 		}

@@ -60,7 +60,7 @@ public class BlackJackDealer extends Person {
 
 	public void dealCards(Deck startingDeck, List<Card> playerHand, List<Card> dealerHand, BlackJackPlayer player) {
 		Scanner sc = new Scanner(System.in);
-		
+
 		System.out.println("\n  Press Enter to deal cards.");
 		String buffer = sc.nextLine();
 		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
